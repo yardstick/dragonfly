@@ -73,10 +73,10 @@ module Dragonfly
     def content_disposition_header
       parts = []
       parts << content_disposition if content_disposition
-      parts << %(filename="#{URI.encode(filename)}") if filename
+      parts << %(filename="#{CGI.escape(filename)}") if filename
       parts.any? ? {"Content-Disposition" => parts.join('; ')} : {}
     end
-    
+
     def method_not_allowed_headers
       {
         'Content-Type' => 'text/plain',

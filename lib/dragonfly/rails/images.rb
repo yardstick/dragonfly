@@ -19,9 +19,9 @@ begin
   require 'rack/cache'
   Rails.application.middleware.insert_before 'Dragonfly::Middleware', 'Rack::Cache', {
     :verbose     => true,
-    :metastore   => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/meta"), # URI encoded in case of spaces
-    :entitystore => URI.encode("file:#{Rails.root}/tmp/dragonfly/cache/body")
+    :metastore   => CGI.escape("file:#{Rails.root}/tmp/dragonfly/cache/meta"), # URI encoded in case of spaces
+    :entitystore => CGI.escape("file:#{Rails.root}/tmp/dragonfly/cache/body")
   }
-rescue LoadError => e  
+rescue LoadError => e
   app.log.warn("Warning: couldn't find rack-cache for caching dragonfly content")
 end
